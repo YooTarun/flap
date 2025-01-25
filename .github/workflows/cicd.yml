@@ -48,6 +48,6 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
       with:
-        context: .
+        context: ./FLAP  # Adjusted context to the directory containing your Dockerfile
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/flask-app:latest
