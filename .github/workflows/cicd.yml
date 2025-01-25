@@ -1,10 +1,10 @@
 name: CI/CD for Dockerized Flask app
 
 on:
-    push:
-        branches: [ main ]
-    pull_request:
-        branches: [ main ]
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   build-and-test:
@@ -26,8 +26,7 @@ jobs:
         pip install pytest
 
     - name: Run tests
-      run: |
-        pytest
+      run: pytest
 
   build-and-publish:
     needs: build-and-test
@@ -49,12 +48,6 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
       with:
-        context:
+        context: .
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }} /flask-app:latest
-
-    - name: Image digest
-      run: echo ${{ steps.build-and-publish.outputs.digest }}
-      
-
-    
+        tags: ${{ secrets.DOCKER_USERNAME }}/flask-app:latest
